@@ -14,8 +14,11 @@
 import 'package:flutter/cupertino.dart';
 
 class PokemonListing {
-  late final int? id;
-  late final String? name;
+  final int? id;
+  final String? name;
+
+  String get imageUrl =>
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/$id.png';
 
   PokemonListing({@required this.id, @required this.name});
 
@@ -28,18 +31,18 @@ class PokemonListing {
 }
 
 class PokemonPageResponse {
-  late final List<PokemonListing>? pokemonListings;
-  late final bool? canLoadPage;
+  final List<PokemonListing>? pokemonListings;
+  final bool? canLoadNextPage;
 
   PokemonPageResponse(
-      {@required this.pokemonListings, @required this.canLoadPage});
+      {@required this.pokemonListings, @required this.canLoadNextPage});
 
   factory PokemonPageResponse.fromJson(Map<String, dynamic> json) {
-    final canLoadPage = json['next'] != null;
+    final canLoadNextPage = json['next'] != null;
     final pokemonListings = (json['results'] as List)
         .map((listingJson) => PokemonListing.fromJson(listingJson))
         .toList();
     return PokemonPageResponse(
-        pokemonListings: pokemonListings, canLoadPage: canLoadPage);
+        pokemonListings: pokemonListings, canLoadNextPage: canLoadNextPage);
   }
 }

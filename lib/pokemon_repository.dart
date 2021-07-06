@@ -7,7 +7,7 @@ class PokemonRepository {
   final baseUrl = "pokeapi.co";
   final client = http.Client();
 
-  Future<PokemonPageResponse> getPokemon(int pageIndex) async {
+  Future<PokemonPageResponse> getPokemonPage(int pageIndex) async {
     final queryParameters = {
       'limit': '200',
       'offset': (pageIndex * 200).toString()
