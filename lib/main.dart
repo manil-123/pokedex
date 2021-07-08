@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex/bloc/nav_cubit.dart';
 import 'package:pokedex/bloc/pokemon_bloc.dart';
+import 'package:pokedex/bloc/pokemon_details_cubit.dart';
 import 'package:pokedex/bloc/pokemon_event.dart';
-import 'package:pokedex/pokedex_view.dart';
+
+import 'app_navigator.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  final pokemonDetailsCubit = PokemonDetailsCubit();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -21,8 +25,15 @@ class MyApp extends StatelessWidget {
             ..add(
               PokemonPageRequest(page: 0),
             ),
-        )
-      ], child: PokedexView()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              NavCubit(pokemonDetailsCubit: pokemonDetailsCubit),
+        ),
+        BlocProvider(
+          create: (context) => PokemonDetailsCubit(),
+        ),
+      ], child: AppNavigator()),
     );
   }
 }
