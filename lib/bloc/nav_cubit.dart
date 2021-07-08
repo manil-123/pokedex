@@ -1,13 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex/bloc/pokemon_details_cubit.dart';
 
-class NavCubit extends Cubit<int>{
-  NavCubit():super(null)
+class NavCubit extends Cubit<int?> {
+  PokemonDetailsCubit? pokemonDetailsCubit;
 
-  void showPokemonDetails(int pokemonId){
+  NavCubit({@required this.pokemonDetailsCubit}) : super(null);
+
+  void showPokemonDetails(int pokemonId) {
+    print(pokemonId);
+    pokemonDetailsCubit!.getPokemonDetails(pokemonId);
     emit(pokemonId);
   }
 
-  void popToPokedex(){
+  void popToPokedex() {
     emit(null);
-}
+    pokemonDetailsCubit!.clearPokemonDetails();
+  }
 }
